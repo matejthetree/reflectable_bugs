@@ -1,5 +1,5 @@
 import 'package:reflectable/mirrors.dart';
-import 'package:data_cache_bug/main.dart';
+import 'main.dart';
 class ReflectTest {
 
   void invokingCapabilityTest(){
