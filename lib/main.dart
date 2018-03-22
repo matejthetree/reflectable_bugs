@@ -1,6 +1,38 @@
 import 'package:flutter/material.dart';
+import 'package:reflectable/reflectable.dart';
+import 'main.reflectable.dart';
 
-void main() => runApp(new MyApp());
+class Reflector extends Reflectable {
+  const Reflector()
+      : super(invokingCapability); // Request the capability to invoke methods.
+}
+
+const reflector = const Reflector();
+
+void main() {
+
+  initializeReflectable();
+
+  A x = new A(10);
+  // Reflect upon [x] using the const instance of the reflector:
+  InstanceMirror instanceMirror = reflector.reflect(x);
+  int weekday = new DateTime.now().weekday;
+  // On Fridays we test if 3 is greater than 10, on other days if it is less
+  // than or equal.
+  String methodName = weekday == DateTime.FRIDAY ? "greater" : "lessEqual";
+  // Reflectable invocation:
+  print(instanceMirror.invoke(methodName, [3]));
+
+  runApp(new MyApp());
+}
+
+@reflector // This annotation enables reflection on A.
+class A {
+  final int a;
+  A(this.a);
+  greater(int x) => x > a;
+  lessEqual(int x) => x <= a;
+}
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
