@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:reflectable/reflectable.dart';
 import 'main.reflectable.dart';
+import 'reflectable_test.dart';
 
 class Reflector extends Reflectable {
   const Reflector()
@@ -13,15 +14,8 @@ void main() {
 
   initializeReflectable();
 
-  A x = new A(10);
-  // Reflect upon [x] using the const instance of the reflector:
-  InstanceMirror instanceMirror = reflector.reflect(x);
-  int weekday = new DateTime.now().weekday;
-  // On Fridays we test if 3 is greater than 10, on other days if it is less
-  // than or equal.
-  String methodName = weekday == DateTime.FRIDAY ? "greater" : "lessEqual";
-  // Reflectable invocation:
-  print(instanceMirror.invoke(methodName, [3]));
+  var reflectTest = new ReflectTest()
+    ..invokingCapabilityTest();
 
   runApp(new MyApp());
 }
